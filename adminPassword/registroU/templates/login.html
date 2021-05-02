@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block titulo %}Inicio se Sesion{% endblock %}
+{% block estilos %}
+  <link type="stylesheet" href="/static/css/loginStyle.css">
+{% endblock %} 
+{% block script %}
+
+{% endblock %}
+{% block encabezado %}
+<section class="jumbotron text-center">
+    <h1>WebWarden</h1>
+    <p class="display">Identificate o Crea una Cuenta para Acceder a la Caja Fuerte </p>
+</section>
+{% endblock %}
+{% block barra %}
+  <nav class="navbar navbar bg-dark navbar-dark">
+    <a class="navbar-brand" href="{% url 'registro' %}">Registro</a>
+  </nav>
+{% endblock %}
+
+{% block contenido %}
+  <form method="POST">
+    {% csrf_token %}
+    <section id="formulario" class="container">
+       <div class="row">
+        <div class="col-sm-6">
+          <label for="username">Nick:</label>
+          <input class="form-control" type="text" id="username" placeholder="Enter NickName" name="username">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-7">
+          <label for="pwd">Contraseña:</label>
+          <input class="form-control" type="password" id="pwd" placeholder="Enter password" name="password">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-8">
+          <button id="boton" type="submit" class="btn btn-primary">Ingresar</button>
+        </div>
+      </div>
+    </section>
+  </form>
+
+{% if errores %}
+  {% for error in errores %}
+    <div id="error" class="alert alert-danger">
+      <strong>{{error}}</strong> 
+    </div>
+  {% endfor %}
+{% endif %}
+{% endblock %}
