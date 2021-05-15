@@ -6,4 +6,4 @@ cuentas que los usuarios del sistema poseen en otros sistemas, esto
 es, un sistema de administración de contraseñas. Este tipo de sistemas
 le permite esencialmente a los usuarios tener contraseñas diferentes
 para cada cuenta que posean, sin la necesidad de tener que recordarlas
-todas.x
+todas.

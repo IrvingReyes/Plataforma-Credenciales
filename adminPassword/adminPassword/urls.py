@@ -18,7 +18,7 @@ from django.urls import path
 from registroU import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('/',views.logIn,name='login'),
+    path('',views.logIn,name='login'),
     path('registro/',views.registroUsuario,name='registro'),
     path('usuario',views.usuario,name='usuario'),
     path('usuario/registroCredencial',views.registroCredencial,name='registroCredencial'),

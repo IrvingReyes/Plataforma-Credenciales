@@ -22,40 +22,27 @@
         {% csrf_token %}
         <div class="row">
             <div class="col-7">
-                <label>Nombre Completo :</label>
+                <label>Nombre de la Cuenta :</label>
                 <input type="text" class="form-control" name="nombre" placeholder="Ingresa tu nombre completo">
             </div>
-            <div class="col-4">
-                <label>Nick-Name :</label>
-                <input type="text" class="form-control" name="username" placeholder="USER777">
-            </div>
         </div>
         <div class="row">
             <div class="col-10">
-                <label>Contraseña :</label>
+                <label>Contraseña:</label>
                 <input type="password" class="form-control" name="password" placeholder="Contraseña">
+                <!--aqui pondremos la forma de autogenerar la contraseña y que se pueda mostrar hasta ahorita tenemos la opcion de dos botones uno que genere o y otro que muestre-->
             </div>
+        </div>
+        <div class="row">
             <div class="col-10">
-                <label>Confirmación de Contraseña :</label>
-                <input type="password" class="form-control" name="cpassword" placeholder="Repite la Contraseña anterior">
-            </div>
-            <div class="col-10">
-                <p>La contraseña maestra es la clave que utilizas para acceder a tu caja fuerte.
-                    Es muy importante que no olvides tu contraseña maestra. 
-                    No hay forma de recuperarla si la olvidas.
-                </p>
+                <label>URL :</label>
+                <input type="url" class="form-control" name="url" placeholder="www.example.com/example" >
             </div>
         </div>
         <div class="row">
             <div class="col-7">
-                <label>Correo electrónico</label>
-                <input type="email" class="form-control" name="correo" placeholder="example@example.com" >
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-7">
-                <label>Numero de telefono</label>
-                <input type="text" class="form-control" name="telefono" placeholder="5551234567">
+                <label>Detalles Extra :</label>
+                <textarea name="detalles" rows="5" cols="10"></textarea>
             </div>
         </div>
         <div class="row">
