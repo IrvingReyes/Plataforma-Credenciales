@@ -8,7 +8,7 @@
 {% endblock %}
 {% block encabezado %}
 <section class="jumbotron text-center">
-  <p class="display">Registro de Credencial</p>
+  <h3>Registro de Credencial</h3>
 </section>
 {% endblock %}
 {% block barra %}
@@ -32,6 +32,12 @@
                 <input type="password" class="form-control" name="password" placeholder="Contraseña">
                 <!--aqui pondremos la forma de autogenerar la contraseña y que se pueda mostrar hasta ahorita tenemos la opcion de dos botones uno que genere o y otro que muestre-->
             </div>
+            <div class="col-3">
+                <button type="" class="btn btn-outline-success btn-block">Mostrar</button>
+            </div>
+            <div class="row">
+                <button type="" class="btn btn-outline-success btn-block">Generar</button>
+            </div>
         </div>
         <div class="row">
             <div class="col-10">
@@ -40,9 +46,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-7">
+            <div class="col-5">
                 <label>Detalles Extra :</label>
-                <textarea name="detalles" rows="5" cols="10"></textarea>
+            </div>
+            <div class="col-12">
+                <textarea name="detalles" rows="3" cols="50"></textarea>
             </div>
         </div>
         <div class="row">
