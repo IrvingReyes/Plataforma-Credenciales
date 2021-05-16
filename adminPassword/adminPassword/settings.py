@@ -77,14 +77,15 @@ WSGI_APPLICATION = 'adminPassword.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        #'ENGINE': 'django.db.backends.mysql',
-        #'NAME': 'cajaFuerte',
-        #'USER': 'postgres',
-        #'PASSWORD': 'tetriz97',
-        #'HOST': '127.0.0.1',
-        #'PORT': '5432',
+        #Revisar en cada local la configuracion de la base de datos
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Cuentas',
+        'USER': 'xoce',
+        'PASSWORD': 'tetriz97',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
