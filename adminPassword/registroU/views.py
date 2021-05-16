@@ -3,13 +3,9 @@ from django.http import request
 from django.shortcuts import render,redirect
 from django.template import Template,Context
 from registroU import models
-import hashlib
-
-def hash_password(password_usuario):
-    hasher=hashlib.sha512()
-    hasher.update(password_usuario.encode('utf-8'))
-    return hasher.hexdigest()
+from registroU import api
 # Create your views here.
+
 def registroUsuario(request):
     template='registroUsuario.html'
     if request.method=='GET':
@@ -20,17 +16,22 @@ def registroUsuario(request):
         password=request.POST.get('password','').strip()
         correoE=request.POST.get('correo','').strip()
         telefono=request.POST.get('telefono','').strip()
-    usuario=models.Usuario()
-    password_hasher=hash_password(password)
-    usuario.nombre=nombreUsuario
-    usuario.username=username
-    usuario.password=password_hasher
-    usuario.email=correoE
-    usuario.telefono=telefono
-    usuario.save()
-    return redirect('/')
-    
-
+    try:
+        usuario=models.Usuario.objects.get(Username=username)
+        if usuario:
+            print("usuario existe")
+        print("usuario no existe")
+    except:
+        print()
+        usuario=models.Usuario()
+        password_hasher=hash_password(password)
+        usuario.nombre=nombreUsuario
+        usuario.username=username
+        usuario.password=password_hasher
+        usuario.email=correoE
+        usuario.telefono=telefono
+        usuario.save()
+        return redirect('/')
 
 def logIn(request):
     template='login.html'
@@ -61,8 +62,11 @@ def usuario(request):
     return render(request,template)
 
 def registroCredencial(request):
-    template='registroCredencial.html'
-    return render(request,template)
+    if request.method=='GET':
+        template='registroCredencial.html'
+        return render(request,template)
+    elif request.method=='POST':
+        pass
 
 
 
