@@ -1,5 +1,4 @@
 import hashlib
-from registroU import models
 
 def hash_password(password_usuario):
     hasher=hashlib.sha512()

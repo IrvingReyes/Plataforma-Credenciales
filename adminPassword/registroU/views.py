@@ -1,9 +1,12 @@
-from django import template
-from django.http import request
 from django.shortcuts import render,redirect
 from django.template import Template,Context
 from registroU import models
-from registroU import api
+
+def hash_password(password_usuario):
+    hasher=hashlib.sha512()
+    hasher.update(password_usuario.encode('utf-8'))
+    return hasher.hexdigest()
+
 # Create your views here.
 
 def registroUsuario(request):
