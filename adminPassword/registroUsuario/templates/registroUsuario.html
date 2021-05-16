@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block titulo %}Registro Usuario{% endblock %}
+{% block estilos %}{% endblock %} 
+{% block script %}{% endblock %}
+{% block encabezado %}
+<section class="jumbotron text-center">
+    <h1>Crear Elemento</h1>
+</section>
+{% endblock %}
+
+{% block barra %}
+<nav class="navbar navbar-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="{% url 'login' %}">Inicio</a>
+  </nav>
+{% endblock %}
+
+{% block contenido %}
+<section class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-7">
+                <label>Nombre Completo :</label>
+                <input type="text" class="form-control" name="nombre" placeholder="Ingresa tu nombre completo">
+            </div>
+            <div class="col-4">
+                <label>Nick-Name :</label>
+                <input type="text" class="form-control" name="username" placeholder="USER777">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-10">
+                <label>Contraseña :</label>
+                <input type="password" class="form-control" name="password" placeholder="Contraseña">
+            </div>
+            <div class="col-10">
+                <label>Confirmación de Contraseña :</label>
+                <input type="password" class="form-control" name="cpassword" placeholder="Repite la Contraseña anterior">
+            </div>
+            <div class="col-10">
+                <p>La contraseña maestra es la clave que utilizas para acceder a tu caja fuerte.
+                    Es muy importante que no olvides tu contraseña maestra. 
+                    No hay forma de recuperarla si la olvidas.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-7">
+                <label>Correo electrónico</label>
+                <input type="email" class="form-control" name="correo" placeholder="example@example.com" >
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-7">
+                <label>Numero de telefono</label>
+                <input type="text" class="form-control" name="telefono" placeholder="5551234567">
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-outline-success btn-block">Registrar</button>
+        </div>
+    </form>
+</section>
+{% endblock %}
