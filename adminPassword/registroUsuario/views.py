@@ -7,7 +7,7 @@ from registroUsuario import Api
 from registroUsuario.Api import generar_hash_password
 
 # Create your views here.
-
+ 
 def registroUsuario(request):
     template='registroUsuario.html'
     if request.method=='GET':
