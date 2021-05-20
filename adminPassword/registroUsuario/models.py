@@ -7,6 +7,7 @@ class Usuario(models.Model):
     Password=models.CharField(max_length=1024)
     Email=models.EmailField()
     Telefono=models.CharField(max_length=10)
+    
 
 class Entrada(models.Model):
     nombre_Entrada=models.CharField(max_length=100)
@@ -14,3 +15,7 @@ class Entrada(models.Model):
     password_Asociado=models.CharField(max_length=1024)
     url_Asociado=models.URLField(max_length=1024)
     detalles_Asociado=models.CharField(max_length=1024)
+
+class Vi(models.Model):
+    iv=models.CharField(primary_key=True,max_length=32)
+    usuario=models.ForeignKey(Usuario,on_delete=models.CASCADE)
