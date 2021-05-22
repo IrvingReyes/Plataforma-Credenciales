@@ -2,8 +2,8 @@ from os import error
 from django import template
 from django.shortcuts import render,redirect
 from django.template import Template,Context
-from registroUsuario import models
-from registroUsuario import Api
+from adminPassword.registroUsuario import models
+from adminPassword.registroUsuario import Api
 
 
 # Create your views here.
