@@ -14,10 +14,10 @@ def generar_llave_aes_from_password(password):
     derived_key = HKDF(algorithm=hashes.SHA256(),length=32,salt=None,info=b'handshake data ',backend=default_backend()).derive(password)
     return derived_key
 
-def cifrar(llave_pem, llave_aes, iv):
+def cifrar(texto, llave_aes, iv):
     aesCipher = Cipher(algorithms.AES(llave_aes), modes.CTR(iv),backend=default_backend())
     cifrador = aesCipher.encryptor()
-    cifrado = cifrador.update(llave_pem)
+    cifrado = cifrador.update(texto)
     cifrador.finalize()
     return cifrado
 
