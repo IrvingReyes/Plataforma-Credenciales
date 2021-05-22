@@ -19,3 +19,9 @@ class Entrada(models.Model):
 class Vi(models.Model):
     iv=models.CharField(primary_key=True,max_length=32)
     usuario=models.ForeignKey(Usuario,on_delete=models.CASCADE)
+
+class Intentos_por_IP(models.Model):
+	ip = models.GenericIPAddressField(primary_key=True)
+	contador = models.IntegerField(default=0)
+	ultima_peticion = models.DateTimeField()
+
