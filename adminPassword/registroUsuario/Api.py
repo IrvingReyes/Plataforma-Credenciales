@@ -9,6 +9,9 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 import hashlib
 import os
 
+import datetime
+from datetime import timezone
+
 def generar_llave_aes_from_password(password):
     password = password.encode('utf-8')
     derived_key = HKDF(algorithm=hashes.SHA256(),length=32,salt=None,info=b'handshake data ',backend=default_backend()).derive(password)
