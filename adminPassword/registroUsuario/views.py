@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect
 from django.template import Template,Context
 from registroUsuario import models
 from registroUsuario import Api
-from registroUsuario.Api import generar_hash_password
+
 
 # Create your views here.
  
