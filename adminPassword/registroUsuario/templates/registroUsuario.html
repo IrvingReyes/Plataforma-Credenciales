@@ -16,6 +16,15 @@
 
 {% block contenido %}
 <section class="container">
+    {% if errores %}
+        {% for error in errores %}
+            <div id="error" class="alert alert-danger">
+                <strong>{{error}}</strong>
+            </div>
+            <p>Algo que se vea que mando error
+            </p>
+        {% endfor %}
+    {% endif %}
     <form method="POST">
         {% csrf_token %}
         <div class="row">
@@ -62,3 +71,5 @@
     </form>
 </section>
 {% endblock %}
+
+

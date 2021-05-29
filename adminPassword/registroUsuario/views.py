@@ -20,9 +20,11 @@ def registroUsuario(request):
         telefono=request.POST.get('telefono','').strip()
     
     try:
-        usuario_existe=models.Usuario.objects.get(Username=username,Password_Master=password)
+        usuario_existe=models.Usuario.objects.get(Username=username)
         if usuario_existe:
             pass
+            errores={'El usuario ya existe'}
+            return render(request,template,{'errores':errores})
     except:
         pass
     usuario=models.Usuario()
