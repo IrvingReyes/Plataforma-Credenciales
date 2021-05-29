@@ -8,7 +8,6 @@ from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 import hashlib
 import os
-
 import datetime
 from datetime import timezone
 

@@ -20,7 +20,7 @@ from registroUsuario import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('registro/',views.registroUsuario,name='registro'),
-    path('login/',views.logIn,name='login'),
+    path('',views.logIn,name='login'),
     path('registroCredencial/',views.registroCredencial,name='registroCredencial'),
     path('usuario/',views.usuario,name='usuario'),
 
