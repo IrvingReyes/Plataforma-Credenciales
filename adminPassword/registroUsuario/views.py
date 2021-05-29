@@ -1,5 +1,6 @@
 from os import error
 from django import template
+from django.http import HttpResponse,  JsonResponse
 from django.shortcuts import render,redirect
 from django.template import Template,Context
 from registroUsuario import models
@@ -57,6 +58,13 @@ def logIn(request):
             return redirect('usuario/')
         return render(request,template) 
     elif request.method=='POST':
+        ip = Api.get_client_ip(request)
+        if Api.puede_intentar(ip):
+            pass
+        else:
+            errores={'Numero de intentos agotado, espera un minuto.'}
+            return render(request,template,{'errores':errores})
+
         username=request.POST.get('username','').strip()
         password=request.POST.get('password','').strip()
         try:
@@ -68,4 +76,3 @@ def logIn(request):
         except:
             errores={'Usuario o Contraseña incorrecta'}
             return render(request,template,{'errores':errores})
-        

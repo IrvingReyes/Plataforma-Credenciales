@@ -11,7 +11,7 @@
 {% block barra %}
 <nav class="navbar navbar-sm bg-dark navbar-dark">
     <a class="navbar-brand" href="{% url 'login' %}">Inicio</a>
-  </nav>
+</nav>
 {% endblock %}
 
 {% block contenido %}
@@ -21,54 +21,63 @@
             <div id="error" class="alert alert-danger">
                 <strong>{{error}}</strong>
             </div>
-            <p>Algo que se vea que mando error
-            </p>
         {% endfor %}
     {% endif %}
+    <br>
     <form method="POST">
         {% csrf_token %}
         <div class="row">
-            <div class="col-7">
+            <div class="col-6">
                 <label>Nombre Completo :</label>
                 <input type="text" class="form-control" name="nombre" placeholder="Ingresa tu nombre completo">
             </div>
-            <div class="col-4">
+            <div class="col-6">
                 <label>Nick-Name :</label>
                 <input type="text" class="form-control" name="username" placeholder="USER777">
             </div>
         </div>
+
         <div class="row">
-            <div class="col-10">
+            <div class="col-6">
                 <label>Contraseña :</label>
                 <input type="password" class="form-control" name="password" placeholder="Contraseña">
             </div>
-            <div class="col-10">
+            <div class="col-6">
                 <label>Confirmación de Contraseña :</label>
                 <input type="password" class="form-control" name="cpassword" placeholder="Repite la Contraseña anterior">
             </div>
-            <div class="col-10">
+        </div>
+ 
+        <div class="row">
+            <div class="col-12">
                 <p>La contraseña maestra es la clave que utilizas para acceder a tu caja fuerte.
                     Es muy importante que no olvides tu contraseña maestra. 
-                    No hay forma de recuperarla si la olvidas.
+                    <b>No hay forma de recuperarla si la olvidas. </b>
                 </p>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-7">
-                <label>Correo electrónico</label>
+            <div class="col-6">
+                <label>Correo electrónico :</label>
                 <input type="email" class="form-control" name="correo" placeholder="example@example.com" >
             </div>
-        </div>
-        <div class="row">
-            <div class="col-7">
-                <label>Numero de telefono</label>
+            <div class="col-6">
+                <label>Numero de teléfono :</label>
                 <input type="text" class="form-control" name="telefono" placeholder="5551234567">
             </div>
         </div>
+        <br>
         <div class="row">
-            <button type="submit" class="btn btn-outline-success btn-block">Registrar</button>
+            <div class="col-6">
+                <button type="submit" class="btn btn-outline-success btn-block">Registrar</button>
+            </div>
         </div>
     </form>
+
+    <br>
+    <br>
+    
 </section>
 {% endblock %}
 

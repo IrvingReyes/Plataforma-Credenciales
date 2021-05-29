@@ -19,36 +19,39 @@
 {% endblock %}
 
 {% block contenido %}
+<section class="container">
+
+  {% if errores %}
+    {% for error in errores %}
+      <div id="error" class="alert alert-danger">
+        <strong>{{error}}</strong> 
+      </div>
+    {% endfor %}
+  {% endif %}
+
   <form method="POST">
     {% csrf_token %}
-    <section id="formulario" class="container">
        <div class="row">
         <div class="col-sm-6">
-          <label for="username">Nick:</label>
+          <label for="username">Nick :</label>
           <input class="form-control" type="text" id="username" placeholder="Enter NickName" name="username">
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-7">
-          <label for="pwd">Contraseña:</label>
+        <div class="col-sm-6">
+          <label for="pwd">Contraseña :</label>
           <input class="form-control" type="password" id="pwd" placeholder="Enter password" name="password">
         </div>
       </div>
-
+      <br>
       <div class="row">
-        <div class="col-8">
+        <div class="col-6">
           <button id="boton" type="submit" class="btn btn-primary">Ingresar</button>
         </div>
       </div>
     </section>
   </form>
 
-{% if errores %}
-  {% for error in errores %}
-    <div id="error" class="alert alert-danger">
-      <strong>{{error}}</strong> 
-    </div>
-  {% endfor %}
-{% endif %}
 {% endblock %}
+

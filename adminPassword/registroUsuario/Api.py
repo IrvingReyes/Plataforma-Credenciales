@@ -7,6 +7,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 import hashlib
+from registroUsuario import models
 import os
 import datetime 
 from datetime import timezone
