@@ -22,16 +22,18 @@ def registroUsuario(request):
     try:
         usuario_existe=models.Usuario.objects.get(Username=username,Password_Master=password)
         if usuario_existe:
-            error={"El usuario Existe no posible registrar"}
+            pass
     except:
-        usuario=models.Usuario()
+        pass
+    usuario=models.Usuario()
     usuario.Nombre=nombreUsuario
     usuario.Username=username
     usuario.Email=correoE
     usuario.Telefono=telefono
     hash=Api.generar_hash_password(password)
-    usuario.Password_Master=hash
+    usuario.Password=hash
     usuario.save()
+    return redirect('/registro')
 
 
 def registroCredencial(request):

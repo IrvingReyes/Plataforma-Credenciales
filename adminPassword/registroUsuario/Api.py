@@ -8,7 +8,7 @@ from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 import hashlib
 import os
-import datetime
+import datetime 
 from datetime import timezone
 
 def generar_llave_aes_from_password(password):
@@ -35,13 +35,13 @@ def generar_iv():
     return iv
 
 
-#Funciones para validar el numero de intentos.
 
 def generar_hash_password(password_usuario):
     hasher=hashlib.sha512()
     hasher.update(password_usuario.encode('utf-8'))
     return hasher.hexdigest()
 
+#Funciones para validar el numero de intentos.
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
