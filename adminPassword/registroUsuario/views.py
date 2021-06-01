@@ -19,6 +19,8 @@ def registroUsuario(request):
         password=request.POST.get('password','').strip()
         correoE=request.POST.get('correo','').strip()
         telefono=request.POST.get('telefono','').strip()
+        tokenTelegram=request.POST.get('tokenTelegram','').strip()
+        chatId=request.POST.get('chatId','').strip()
     
     try:
         usuario_existe=models.Usuario.objects.get(Username=username)
@@ -35,6 +37,8 @@ def registroUsuario(request):
     usuario.Telefono=telefono
     hash=Api.generar_hash_password(password)
     usuario.Password=hash
+    usuario.token_telegram=tokenTelegram
+    usuario.chat_id=chatId
     usuario.save()
     return redirect('/registro')
 
