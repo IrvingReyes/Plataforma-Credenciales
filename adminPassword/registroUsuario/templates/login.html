@@ -29,11 +29,12 @@
     {% endfor %}
   {% endif %}
 
+  <p>Para poder acceder necesitas tu código de Telegram. Puedes obtenerlo <a href='codigoTelegram'>Aquí</a>.</p>
   <form method="POST">
     {% csrf_token %}
        <div class="row">
         <div class="col-sm-6">
-          <label for="username">Nick :</label>
+          <label for="username">Nombre de usuario:</label>
           <input class="form-control" type="text" id="username" placeholder="Enter NickName" name="username">
         </div>
       </div>

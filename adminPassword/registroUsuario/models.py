@@ -10,7 +10,8 @@ class Usuario(models.Model):
     Telefono=models.CharField(max_length=10)
     token_telegram=models.CharField(max_length=128, default="")
     chat_id=models.CharField(max_length=32, default="")
-
+    codigoTelegram=models.CharField(max_length=5, default="")
+    tiempo_de_vida = models.DateTimeField()
     
 
 class Entrada(models.Model):

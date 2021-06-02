@@ -23,5 +23,6 @@ urlpatterns = [
     path('',views.logIn,name='login'),
     path('registroCredencial/',views.registroCredencial,name='registroCredencial'),
     path('usuario/',views.usuario,name='usuario'),
+    path('codigoTelegram/',views.codigoTelegram,name='codigoTelegram'),
 
 ]
