@@ -77,14 +77,21 @@ def logIn(request):
 
         username=request.POST.get('username','').strip()
         password=request.POST.get('password','').strip()
+        codigoAcceso=request.POST.get('codigoAcceso','').strip()
+
         try:
             password_hash=Api.generar_hash_password(password)
-            models.Usuario.objects.get(Username=username,Password=password_hash)
+            usuario = models.Usuario.objects.get(Username=username,Password=password_hash,codigoTelegram=codigoAcceso)
+            if (Api.diferencia_segundos_ahora(usuario.tiempo_de_vida) > 180):  
+                errores={'Ocurrio un error inesperado. Usuario o contraseña no válidos o código de acceso no valido o expiró.'}
+                return render(request,template,{'errores':errores})
             request.session['acceso']=True
             request.session['nombre']=username
+            usuario.codigoTelegram = random.randint(9999,99999)
+            usuario.save()
             return redirect('usuario/')
         except:
-            errores={'Usuario o Contraseña incorrecta'}
+            errores={'Ocurrio un error inesperado. Usuario o contraseña no válidos o código de acceso no valido o expiró.'}
             return render(request,template,{'errores':errores})
 
 def codigoTelegram(request):
