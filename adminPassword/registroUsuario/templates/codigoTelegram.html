@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block titulo %}Codigo de acceso Telegram{% endblock %}
+{% block estilos %}
+  
+{% endblock %} 
+{% block script %}
+
+{% endblock %}
+{% block encabezado %}
+<section class="jumbotron text-center">
+    <h1>Código Telegram</h1>
+    <p class="display">Obten tu código de acceso via Telegram</p>
+</section>
+{% endblock %}
+{% block barra %}
+  <nav class="navbar navbar bg-dark navbar-dark">
+    <a class="navbar-brand" href="{% url 'registro' %}">Registro</a>
+  </nav>
+{% endblock %}
+
+{% block contenido %}
+<section class="container">
+
+  {% if errores %}
+    {% for error in errores %}
+      <div id="error" class="alert alert-danger">
+        <strong>{{error}}</strong> 
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="username">Ingresa tu nombre de usuario para obtener tu código de Telegram:</label>
+        <input class="form-control" type="text" id="usernameToken"  name="usernameToken">
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-6">
+        <button id="boton2" type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+    <br>
+  </form>  
+
+{% endblock %}
+
