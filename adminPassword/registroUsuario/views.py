@@ -112,4 +112,4 @@ def codigoTelegram(request):
 
 def logOut(request):
     request.session.flush()
-    return redirect('')
+    return redirect('/')
