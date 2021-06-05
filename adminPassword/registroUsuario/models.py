@@ -11,7 +11,7 @@ class Usuario(models.Model):
     token_telegram=models.CharField(max_length=128, default="")
     chat_id=models.CharField(max_length=32, default="")
     codigoTelegram=models.CharField(max_length=5, default="")
-    tiempo_de_vida = models.DateTimeField()
+    tiempo_de_vida = models.DateTimeField(null=True)
     
 
 class Entrada(models.Model):

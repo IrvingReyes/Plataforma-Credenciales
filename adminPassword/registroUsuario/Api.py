@@ -35,8 +35,6 @@ def generar_iv():
     iv=os.urandom(16)
     return iv
 
-
-
 def generar_hash_password(password_usuario):
     hasher=hashlib.sha512()
     hasher.update(password_usuario.encode('utf-8'))
