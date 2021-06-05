@@ -20,9 +20,10 @@ from registroUsuario import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('registro/',views.registroUsuario,name='registro'),
     path('',views.logIn,name='login'),
-    path('registroCredencial/',views.registroCredencial,name='registroCredencial'),
+    path('registro/',views.registroUsuario,name='registro'),
+    path('usuario/',views.usuario,name='usuario'),
+    path('usuario/registroCredencial/',views.registroCredencial,name='registroCredencial'),
     path('usuario/',views.usuario,name='usuario'),
     path('codigoTelegram/',views.codigoTelegram,name='codigoTelegram'),
     path('logout',views.logOut,name='logout')

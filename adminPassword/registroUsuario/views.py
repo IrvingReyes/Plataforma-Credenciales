@@ -1,10 +1,13 @@
 from os import error
 from django import template
+from django.db.models.query import RawQuerySet
 from django.http import HttpResponse,  JsonResponse
 from django.shortcuts import render,redirect
 from django.template import Template,Context
+from requests.models import RequestEncodingMixin
 from registroUsuario import models
 from registroUsuario import Api
+from adminPassword.decorador import login_requerido
 import sys
 import requests
 import random
@@ -46,7 +49,7 @@ def registroUsuario(request):
     usuario.chat_id=chatId
     usuario.codigoTelegram = random.randint(9999,99999)
     usuario.save()
-    return redirect('/registro')
+    return redirect('/')
 
 
 def registroCredencial(request):
@@ -54,10 +57,17 @@ def registroCredencial(request):
     if request.method=='GET':
         return render(request,template)
     if request.method=='POST':
-        pass
+        nombreCredencial=request.POST.get('nombre','').strip()
+        passwordCredencial=request.POST.get('password','').strip()
+        urlCredencial=request.POST.get('url','').strip()
+        detallesCredencial=request.POST.get('detalles','').strip()
+
+
     
 def usuario(request):
     template='usuario.html'
+    iduser=request.session.get('userID')
+    print(iduser)
     return render(request,template)
 
 def logIn(request):
@@ -69,16 +79,12 @@ def logIn(request):
         return render(request,template) 
     elif request.method=='POST':
         ip = Api.get_client_ip(request)
-        if Api.puede_intentar(ip):
-            pass
-        else:
+        if not Api.puede_intentar(ip):
             errores={'Numero de intentos agotado, espera un minuto.'}
             return render(request,template,{'errores':errores})
-
         username=request.POST.get('username','').strip()
         password=request.POST.get('password','').strip()
         codigoAcceso=request.POST.get('codigoAcceso','').strip()
-
         try:
             password_hash=Api.generar_hash_password(password)
             usuario = models.Usuario.objects.get(Username=username,Password=password_hash,codigoTelegram=codigoAcceso)
@@ -86,7 +92,7 @@ def logIn(request):
                 errores={'Ocurrio un error inesperado. Usuario o contraseña no válidos o código de acceso no valido o expiró.'}
                 return render(request,template,{'errores':errores})
             request.session['acceso']=True
-            request.session['nombre']=username
+            request.session['userID']=usuario.pk
             usuario.codigoTelegram = random.randint(9999,99999)
             usuario.save()
             return redirect('usuario/')
@@ -100,15 +106,19 @@ def codigoTelegram(request):
         return render(request,template)
     elif request.method=='POST':
         usernameToken=request.POST.get('usernameToken','').strip()
-        if (usernameToken):
+        try:
             datos_usuario=models.Usuario.objects.get(Username=usernameToken)
             codigoAleatorio = random.randint(9999,99999)
             datos_usuario.codigoTelegram = codigoAleatorio
             datos_usuario.tiempo_de_vida = datetime.datetime.now()
-            datos_usuario.save()
             requests.post('https://api.telegram.org/bot' + datos_usuario.token_telegram + '/sendMessage', data={'chat_id': datos_usuario.chat_id, 'text': codigoAleatorio })
+            datos_usuario.save()
             return redirect('/')
-
+        except:
+            errores={'Ocurrio un error inesperado en APIBOtelegram'}
+            return render(request,template,{'errores':errores})
+       
+                
 
 def logOut(request):
     request.session.flush()
