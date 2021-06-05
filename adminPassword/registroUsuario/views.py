@@ -108,3 +108,8 @@ def codigoTelegram(request):
             datos_usuario.save()
             requests.post('https://api.telegram.org/bot' + datos_usuario.token_telegram + '/sendMessage', data={'chat_id': datos_usuario.chat_id, 'text': codigoAleatorio })
             return redirect('/')
+
+
+def logOut(request):
+    request.session.flush()
+    return redirect('')
