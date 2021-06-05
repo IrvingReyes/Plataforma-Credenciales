@@ -4,7 +4,7 @@
   
 {% endblock %} 
 {% block script %}
-
+<script src="/static/js/validarInicio.js"></script>
 {% endblock %}
 {% block encabezado %}
 <section class="jumbotron text-center">
@@ -20,6 +20,14 @@
 
 {% block contenido %}
 <section class="container">
+  <div class="container">
+    <div id="divError" class="card">
+    <div class="card-header text-white" style="background-color: #F00B3F;">
+    Ha ocurrido un error en el registro.
+    </div>
+    <div id="contenidoError" class="card-body"> </div>
+    </div>
+    </div>
 
   {% if errores %}
     {% for error in errores %}
@@ -30,7 +38,7 @@
   {% endif %}
 
   <p>Para poder acceder necesitas tu código de Telegram. Puedes obtenerlo <a href='codigoTelegram'>Aquí</a>.</p>
-  <form method="POST">
+  <form method="POST" id="formularioLogin">
     {% csrf_token %}
        <div class="row">
         <div class="col-sm-6">

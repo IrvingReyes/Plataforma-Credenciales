@@ -4,8 +4,9 @@
   
 {% endblock %} 
 {% block script %}
-
+<script src="/static/js/validarCodigoTelegram.js"></script>
 {% endblock %}
+
 {% block encabezado %}
 <section class="jumbotron text-center">
     <h1>Código Telegram</h1>
@@ -20,6 +21,14 @@
 
 {% block contenido %}
 <section class="container">
+  <div class="container">
+    <div id="divError" class="card">
+    <div class="card-header text-white" style="background-color: #F00B3F;">
+    Ha ocurrido un error en el registro.
+    </div>
+    <div id="contenidoError" class="card-body"> </div>
+    </div>
+    </div>
 
   {% if errores %}
     {% for error in errores %}
@@ -29,7 +38,7 @@
     {% endfor %}
   {% endif %}
 
-  <form method="POST">
+  <form method="POST" id="formularioAcceso">
     {% csrf_token %}
     <div class="row">
       <div class="col-sm-6">
