@@ -1,17 +1,16 @@
 from os import error
 from django import template
+from django.db.models.base import Model
 from django.db.models.query import RawQuerySet
 from django.http import HttpResponse,  JsonResponse
 from django.shortcuts import render,redirect
 from django.template import Template,Context
 from requests.models import RequestEncodingMixin
-from registroUsuario import models
-from registroUsuario import Api
+from registroUsuario import models,Api
 from adminPassword.decorador import login_requerido
 import sys
 import requests
 import random
-
 import datetime 
 from datetime import timezone
 
@@ -54,21 +53,34 @@ def registroUsuario(request):
 
 def registroCredencial(request):
     template='registroCredencial.html'
+    idusuario=request.session.get('userID')
+    
     if request.method=='GET':
-        return render(request,template)
+       return render(request,template)
     if request.method=='POST':
         nombreCredencial=request.POST.get('nombre','').strip()
         passwordCredencial=request.POST.get('password','').strip()
         urlCredencial=request.POST.get('url','').strip()
         detallesCredencial=request.POST.get('detalles','').strip()
+        
+        usuario=models.Usuario.objects.get(pk=idusuario)
+        
+        cuenta=models.Cuenta()
+        cuenta.nombre_Cuenta=nombreCredencial
+        cuenta.usuario_Asociado=usuario
+        cuenta.password_Asociado=passwordCredencial
+        cuenta.url_Asociado=urlCredencial
+        cuenta.detalles_Asociado=detallesCredencial
+        cuenta.save()
+        return redirect('/usuario/')
 
 
-    
 def usuario(request):
     template='usuario.html'
     iduser=request.session.get('userID')
-    print(iduser)
-    return render(request,template)
+    if request.method=='GET': 
+        return render(request,template)
+    
 
 def logIn(request):
     template='login.html'

@@ -24,7 +24,6 @@ urlpatterns = [
     path('registro/',views.registroUsuario,name='registro'),
     path('usuario/',views.usuario,name='usuario'),
     path('usuario/registroCredencial/',views.registroCredencial,name='registroCredencial'),
-    path('usuario/',views.usuario,name='usuario'),
     path('codigoTelegram/',views.codigoTelegram,name='codigoTelegram'),
     path('logout',views.logOut,name='logout')
 ]

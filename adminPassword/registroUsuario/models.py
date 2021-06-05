@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 class Usuario(models.Model):
@@ -14,12 +13,13 @@ class Usuario(models.Model):
     tiempo_de_vida = models.DateTimeField(null=True)
     
 
-class Entrada(models.Model):
-    nombre_Entrada=models.CharField(max_length=100)
-    suario_Asociado=models.ForeignKey(Usuario,on_delete=models.CASCADE)
+class Cuenta(models.Model):
+    nombre_Cuenta=models.CharField(max_length=100)
+    usuario_Asociado=models.ForeignKey(Usuario,on_delete=models.CASCADE)
     password_Asociado=models.CharField(max_length=1024)
     url_Asociado=models.URLField(max_length=1024)
     detalles_Asociado=models.CharField(max_length=1024)
+    
 
 class Vi(models.Model):
     iv=models.CharField(primary_key=True,max_length=32)
@@ -31,5 +31,8 @@ class Intentos_por_IP(models.Model):
 	contador = models.IntegerField(default=0)
 	ultima_peticion = models.DateTimeField()
 
+class Usuario_Confianza(models.Model):
+    usuarioRegistrado=models.ForeignKey(Usuario,on_delete=models.CASCADE)
+    
 #python manage.py migrate your_app --fake
 #m1 = models.Usuario(Nombre='Maestro Prueba',Username='Bob23',Password='abcd1234',Email='bob@hotmail.com', Telefono='2234567898', token_telegram='5556789abcd', chat_id='555566777')
