@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block titulo %}Registro Usuario{% endblock %}
 {% block estilos %}{% endblock %} 
-{% block script %}{% endblock %}
+
+{% block script %}
+<script src="/static/js/validarRegistro.js"></script>
+{% endblock %}
+
 {% block encabezado %}
 <section class="jumbotron text-center">
     <h1>Registro Usuario. </h1>
@@ -16,6 +20,15 @@
 
 {% block contenido %}
 <section class="container">
+    <div class="container">
+        <div id="divError" class="card">
+            <div class="card-header text-white" style="background-color: #F00B3F;">
+                 Ha ocurrido un error en el registro.
+            </div>
+            <div id="contenidoError" class="card-body"> </div>
+        </div>
+    </div>
+
     {% if errores %}
         {% for error in errores %}
             <div id="error" class="alert alert-danger">
@@ -32,27 +45,27 @@
 
     </div>
 
-    <form method="POST">
+    <form method="POST" id="formularioUsuario">
         {% csrf_token %}
         <div class="row">
             <div class="col-6">
                 <label>Nombre Completo :</label>
-                <input type="text" class="form-control" name="nombre" placeholder="Ingresa tu nombre completo">
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre completo">
             </div>
             <div class="col-6">
                 <label>Nick-Name :</label>
-                <input type="text" class="form-control" name="username" placeholder="USER777">
+                <input type="text" class="form-control" id="username" name="username" placeholder="USER777">
             </div>
         </div>
 
         <div class="row">
             <div class="col-6">
                 <label>Contraseña :</label>
-                <input type="password" class="form-control" name="password" placeholder="Contraseña">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&-+=()]).{8,}" title="La contraseña debe contener al menos un numero, un caracter especial, mayusculas y minusculas.">
             </div>
             <div class="col-6">
                 <label>Confirmación de Contraseña :</label>
-                <input type="password" class="form-control" name="cpassword" placeholder="Repite la Contraseña anterior">
+                <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Repite la Contraseña anterior">
             </div>
         </div>
  
@@ -68,11 +81,11 @@
         <div class="row">
             <div class="col-6">
                 <label>Correo electrónico :</label>
-                <input type="email" class="form-control" name="correo" placeholder="example@example.com" >
+                <input type="email" class="form-control" id="correo" name="correo" placeholder="example@example.com" >
             </div>
             <div class="col-6">
                 <label>Numero de teléfono :</label>
-                <input type="text" class="form-control" name="telefono" placeholder="5551234567">
+                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="5551234567">
             </div>
         </div>
         <br>
@@ -89,11 +102,11 @@
         <div class="row">
             <div class="col-6">
                 <label>Token de telegram :</label>
-                <input type="text" class="form-control" name="tokenTelegram" placeholder="" >
+                <input type="text" class="form-control" id="tokenTelegram" name="tokenTelegram" placeholder="" >
             </div>
             <div class="col-6">
                 <label>Chat ID :</label>
-                <input type="text" class="form-control" name="chatId" placeholder="">
+                <input type="text" class="form-control" id="chatId" name="chatId" placeholder="">
             </div>
         </div>
         <br>
