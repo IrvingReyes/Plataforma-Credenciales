@@ -62,18 +62,22 @@ def registroCredencial(request):
         passwordCredencial=request.POST.get('password','').strip()
         urlCredencial=request.POST.get('url','').strip()
         detallesCredencial=request.POST.get('detalles','').strip()
-        usuario=models.Usuario.objects.get(pk=idusuario)
-        llave_aes=Api.generar_llave_aes_from_password(pwdusuario)
-        iv=Api.generar_iv()
-        passwordBytes=Api.de_str_a_bytes(passwordCredencial)
-        cifrado=Api.cifrar(passwordBytes,llave_aes,iv)
         
+        usuario=models.Usuario.objects.get(pk=idusuario)#buscamos el usuario que se encuentra loogueado
+        
+        llave_aes=Api.generar_llave_aes_from_password(pwdusuario)#generamos su llave aes a partir de la contra master
+        iv_byte=Api.generar_iv()#generamos el iv unico para cada cuenta para encriptar 
+        iv_texto=Api.de_bytes_a_str(iv_byte)
+        passwordBytes=Api.de_str_a_bytes(passwordCredencial)#generamos la contrasenia asociada para encriptar 
+        cifrado=Api.cifrar(passwordBytes,llave_aes,iv_byte)
+        cifrado_texto=Api.de_bytes_a_str(cifrado)
         cuenta=models.Cuenta()
         cuenta.nombre_Cuenta=nombreCredencial
         cuenta.usuario_Asociado=usuario
-        cuenta.password_Asociado=cifrado
+        cuenta.password_Asociado=cifrado_texto
         cuenta.url_Asociado=urlCredencial
         cuenta.detalles_Asociado=detallesCredencial
+        cuenta.iv=iv_texto
         cuenta.save()
         return redirect('/usuario/')
 
@@ -133,9 +137,7 @@ def codigoTelegram(request):
         except:
             errores={'Ocurrio un error inesperado en APIBOtelegram'}
             return render(request,template,{'errores':errores})
-       
-                
-
+                       
 def logOut(request):
     request.session.flush()
     return redirect('/')

@@ -5,7 +5,7 @@ from django.db.models.base import Model
 class Usuario(models.Model):
     Nombre=models.CharField(max_length=50)
     Username=models.CharField(max_length=40)
-    Password=models.CharField(max_length=1024)
+    Password=models.CharField(max_length=1024)#tentativo a deja encriptado y generar un hash aparte para tener dos conjuntos de datos guardados
     Email=models.EmailField()
     Telefono=models.CharField(max_length=10)
     token_telegram=models.CharField(max_length=128, default="")
