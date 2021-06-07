@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.base import Model
 # Create your models here.
 
 class Usuario(models.Model):
@@ -19,11 +20,9 @@ class Cuenta(models.Model):
     password_Asociado=models.CharField(max_length=1024)
     url_Asociado=models.URLField(max_length=1024)
     detalles_Asociado=models.CharField(max_length=1024)
-    
+    iv=models.CharField(max_length=16)
 
-class Vi(models.Model):
-    iv=models.CharField(primary_key=True,max_length=32)
-    usuario=models.ForeignKey(Usuario,on_delete=models.CASCADE)
+
 
 
 class Intentos_por_IP(models.Model):

@@ -7,6 +7,7 @@ from django.shortcuts import render,redirect
 from django.template import Template,Context
 from requests.models import RequestEncodingMixin
 from registroUsuario import models,Api
+
 from adminPassword.decorador import login_requerido
 import sys
 import requests
@@ -32,12 +33,11 @@ def registroUsuario(request):
     try:
         usuario_existe=models.Usuario.objects.get(Username=username)
         if usuario_existe:
-            pass
             errores={'El usuario ya existe'}
             return render(request,template,{'errores':errores})
     except:
-        pass
-    usuario=models.Usuario()
+        usuario=models.Usuario()
+    
     usuario.Nombre=nombreUsuario
     usuario.Username=username
     usuario.Email=correoE
@@ -54,21 +54,24 @@ def registroUsuario(request):
 def registroCredencial(request):
     template='registroCredencial.html'
     idusuario=request.session.get('userID')
-    
+    pwdusuario=request.session.get('pwd')
     if request.method=='GET':
-       return render(request,template)
+        return render(request,template)
     if request.method=='POST':
         nombreCredencial=request.POST.get('nombre','').strip()
         passwordCredencial=request.POST.get('password','').strip()
         urlCredencial=request.POST.get('url','').strip()
         detallesCredencial=request.POST.get('detalles','').strip()
-        
         usuario=models.Usuario.objects.get(pk=idusuario)
+        llave_aes=Api.generar_llave_aes_from_password(pwdusuario)
+        iv=Api.generar_iv()
+        passwordBytes=Api.de_str_a_bytes(passwordCredencial)
+        cifrado=Api.cifrar(passwordBytes,llave_aes,iv)
         
         cuenta=models.Cuenta()
         cuenta.nombre_Cuenta=nombreCredencial
         cuenta.usuario_Asociado=usuario
-        cuenta.password_Asociado=passwordCredencial
+        cuenta.password_Asociado=cifrado
         cuenta.url_Asociado=urlCredencial
         cuenta.detalles_Asociado=detallesCredencial
         cuenta.save()
@@ -105,6 +108,7 @@ def logIn(request):
                 return render(request,template,{'errores':errores})
             request.session['acceso']=True
             request.session['userID']=usuario.pk
+            request.session['pwd']=password
             usuario.codigoTelegram = random.randint(9999,99999)
             usuario.save()
             return redirect('usuario/')

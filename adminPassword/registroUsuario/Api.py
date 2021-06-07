@@ -12,6 +12,16 @@ import os
 import datetime 
 from datetime import timezone
 
+
+def de_str_a_bytes(texto_str):
+    texto_bytes=bytes(texto_str,'utf-8')
+    return texto_bytes
+
+def de_bytes_a_str(texto_bytes):
+    texto_str=texto_bytes.decode('utf-8')
+    return texto_str
+
+
 def generar_llave_aes_from_password(password):
     password = password.encode('utf-8')
     derived_key = HKDF(algorithm=hashes.SHA256(),length=32,salt=None,info=b'handshake data ',backend=default_backend()).derive(password)
