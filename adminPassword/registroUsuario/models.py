@@ -5,13 +5,14 @@ from django.db.models.base import Model
 class Usuario(models.Model):
     Nombre=models.CharField(max_length=50)
     Username=models.CharField(max_length=40)
-    Password=models.CharField(max_length=1024)#tentativo a deja encriptado y generar un hash aparte para tener dos conjuntos de datos guardados
+    Password=models.CharField(max_length=2048)#tentativo a deja encriptado y generar un hash aparte para tener dos conjuntos de datos guardados
     Email=models.EmailField()
     Telefono=models.CharField(max_length=10)
     token_telegram=models.CharField(max_length=128, default="")
     chat_id=models.CharField(max_length=32, default="")
     codigoTelegram=models.CharField(max_length=5, default="")
     tiempo_de_vida = models.DateTimeField(null=True)
+    salt= models.CharField(max_length=24)
     
 
 class Cuenta(models.Model):
@@ -30,8 +31,6 @@ class Intentos_por_IP(models.Model):
 	contador = models.IntegerField(default=0)
 	ultima_peticion = models.DateTimeField()
 
-class Usuario_Confianza(models.Model):
-    usuarioRegistrado=models.ForeignKey(Usuario,on_delete=models.CASCADE)
     
 #python manage.py migrate your_app --fake
 #m1 = models.Usuario(Nombre='Maestro Prueba',Username='Bob23',Password='abcd1234',Email='bob@hotmail.com', Telefono='2234567898', token_telegram='5556789abcd', chat_id='555566777')

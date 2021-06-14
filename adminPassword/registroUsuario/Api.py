@@ -6,19 +6,14 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-import hashlib
+import crypt
 from registroUsuario import models
-import os
-import datetime 
+import os,base64,datetime 
 from datetime import timezone
 
-
-def de_str_a_bytes(texto_str):
-    texto_bytes=bytes(texto_str,'utf-8')
-    return texto_bytes
-
-def de_bytes_a_str(texto_bytes):
-    texto_str=texto_bytes.decode('utf-8')
+def bin_str(texto_bin):
+    texto_str=base64.b64encode(texto_bin)
+    texto_str=texto_str.decode('utf-8')
     return texto_str
 
 
@@ -45,10 +40,13 @@ def generar_iv():
     iv=os.urandom(16)
     return iv
 
-def generar_hash_password(password_usuario):
-    hasher=hashlib.sha512()
-    hasher.update(password_usuario.encode('utf-8'))
-    return hasher.hexdigest()
+def generar_salt():
+    salt=os.urandom(12)
+    return salt
+
+def generar_hash_password(password_usuario,salt):
+    hash=crypt.crypt(password_usuario,'$6$' + salt)
+    return hash
 
 #Funciones para validar el numero de intentos.
 

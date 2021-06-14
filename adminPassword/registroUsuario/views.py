@@ -42,7 +42,10 @@ def registroUsuario(request):
     usuario.Username=username
     usuario.Email=correoE
     usuario.Telefono=telefono
-    hash=Api.generar_hash_password(password)
+    salt_bin=Api.generar_salt()
+    salt_str=Api.bin_str(salt_bin)
+    usuario.salt=salt_str
+    hash=Api.generar_hash_password(password,salt_str)
     usuario.Password=hash
     usuario.token_telegram=tokenTelegram
     usuario.chat_id=chatId
@@ -105,8 +108,10 @@ def logIn(request):
         password=request.POST.get('password','').strip()
         codigoAcceso=request.POST.get('codigoAcceso','').strip()
         try:
-            password_hash=Api.generar_hash_password(password)
-            usuario = models.Usuario.objects.get(Username=username,Password=password_hash,codigoTelegram=codigoAcceso)
+            usuario = models.Usuario.objects.get(Username=username)
+            salt_recuperado=usuario.salt
+            hash=Api.generar_hash_password(password,salt_recuperado)
+            models.Usuario.objects.get(Username=username,Password=hash,codigoTelegram=codigoAcceso)
             if (Api.diferencia_segundos_ahora(usuario.tiempo_de_vida) > 180):  
                 errores={'Ocurrio un error inesperado. Usuario o contraseña no válidos o código de acceso no valido o expiró.'}
                 return render(request,template,{'errores':errores})
