@@ -91,6 +91,10 @@ def usuario(request):
     if request.method=='GET': 
         return render(request,template)
     
+def generaPassword(request):
+    template='generadorPassword.html'
+    if request.method=='GET':
+        return render(request,template)
 
 def logIn(request):
     template='login.html'

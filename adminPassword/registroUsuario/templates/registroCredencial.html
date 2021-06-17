@@ -4,7 +4,7 @@
   
 {% endblock %} 
 {% block script %}
-    <script src="/static/js/generadorClaves.js"></script>
+    <script src="/static/js/mostrarClaves.js"></script>
 {% endblock %}
 {% block encabezado %}
 <section class="jumbotron text-center">
@@ -12,12 +12,15 @@
 </section>
 {% endblock %}
 {% block barra %}
-<nav class="navbar navbar bg-dark navbar-dark">
-    <a class="navbar-brand" href="{% url 'usuario' %}">Menu Principal</a>
-  </nav>
+    <nav class="navbar navbar bg-dark navbar-dark">
+        <a class="navbar-brand" href="{% url 'usuario' %}">Menu Principal</a>
+        <a class="navbar-brand" href="{% url 'generaPassword' %}">Generar Contraseñas Seguras</a>
+    </nav>
 {% endblock %}
 {% block contenido %}
 <section class="container">
+    <p>Para realizar el registro adecuado y desea utilizar el Generador de contraseñas primero debe de generar la contraseña</p>
+    <p>copiarla y volver todos los datos que ingreso se borraran si sale de la pagina por cuestiones de seguridad</p>
     <form method="POST">
         {% csrf_token %}
         <div class="row">
