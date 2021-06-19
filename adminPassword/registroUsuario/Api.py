@@ -11,13 +11,13 @@ from registroUsuario import models
 import os,base64,datetime 
 from datetime import timezone
 
-def bin_str(texto_bin):
-    texto_str=base64.b64encode(texto_bin)
+def bin_str(contenido_cifrado_bin):
+    texto_str=base64.b64encode(contenido_cifrado_bin)
     texto_str=texto_str.decode('utf-8')
     return texto_str
 
-def str_bin(texto_str):
-    texto_bin=base64.b64decode(texto_str)
+def str_bin(contenido_cifrado_texto):
+    texto_bin=base64.b64decode(contenido_cifrado_texto)
     return texto_bin
 
 def generar_llave_aes_from_password(password):

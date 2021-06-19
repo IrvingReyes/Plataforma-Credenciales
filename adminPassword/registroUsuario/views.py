@@ -1,10 +1,11 @@
+from math import log
 from os import error
 from django import template
 from django.db.models.base import Model
 from django.db.models.query import RawQuerySet
 from django.http import HttpResponse,  JsonResponse
 from django.shortcuts import render,redirect
-from django.template import Template,Context
+from django.template import Template,Context, context
 from requests.models import RequestEncodingMixin
 from registroUsuario import models,Api
 from adminPassword.decorador import login_requerido
@@ -66,7 +67,8 @@ def registroCredencial(request):
         detallesCredencial=request.POST.get('detalles','').strip()
         
         usuario=models.Usuario.objects.get(pk=idusuario)#buscamos el usuario que se encuentra loogueado
-        cuenta=models.Cuenta()
+        
+        
         llave_aes=Api.generar_llave_aes_from_password(pwdusuario)#generamos su llave aes a partir de la contra master
         
         iv_byte=Api.generar_iv()#generamos el iv unico para cada cuenta para encriptar 
@@ -77,7 +79,7 @@ def registroCredencial(request):
         password_cifrado_bin=Api.cifrar(password_bin,llave_aes,iv_byte)
         password_cifrado_texto=Api.bin_str(password_cifrado_bin)
         
-       
+        cuenta=models.Cuenta()
         cuenta.nombre_Cuenta=nombreCredencial
         cuenta.usuario_Asociado=usuario
         cuenta.password_Asociado=password_cifrado_texto
@@ -88,10 +90,41 @@ def registroCredencial(request):
         return redirect('/usuario/')
 
 @login_requerido
+def editarCredencial(request):
+    template='editarCredencial.html'
+    iduser=request.session.get('userID')
+    if request.method=='GET':
+        cuentas=models.Cuenta.objects.filter(usuario_Asociado=iduser)
+        contexto={'cuentas':cuentas}
+        return render(request,template,contexto)
+    elif request.method=='POST':
+        id_cuenta=request.POST.get('cuenta','')
+        cuenta=models.Cuenta.objects.get(id_cuenta)
+        #todo el formulario con la informacion nueva de edicion
+        
+
+
+
+@login_requerido
 def usuario(request):
     template='usuario.html'
     iduser=request.session.get('userID')
-    if request.method=='GET': 
+    pwduser=request.session.get('pwd')
+    if request.method=='POST': 
+        cuentas=models.Cuenta.objects.filter(usuario_Asociado=iduser)
+        n=0
+        for cuenta in cuentas:
+            password_cifrado_texto=cuenta.password_Asociado
+            password_cifrado_bin=Api.str_bin(password_cifrado_texto)
+            iv_cuenta=cuenta.iv
+            iv_bin=Api.str_bin(iv_cuenta)
+            llave=Api.generar_llave_aes_from_password(pwduser)
+            password_desifrado_bin=Api.descifrar(password_cifrado_bin,llave,iv_bin)
+            cuentas[n].password_Asociado=password_texto=Api.bin_str(password_desifrado_bin)
+            n+=1
+        contexto={'cuentas':cuentas}           
+        return render(request,template,contexto)
+    elif request.method=='GET':
         return render(request,template)
 
 @login_requerido    
@@ -126,6 +159,7 @@ def logIn(request):
             request.session['acceso']=True
             request.session['userID']=usuario.pk
             request.session['pwd']=password
+            request._set
             usuario.codigoTelegram = random.randint(9999,99999)
             usuario.save()
             return redirect('usuario/')
