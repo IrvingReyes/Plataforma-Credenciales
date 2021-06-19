@@ -7,7 +7,6 @@ from django.shortcuts import render,redirect
 from django.template import Template,Context
 from requests.models import RequestEncodingMixin
 from registroUsuario import models,Api
-
 from adminPassword.decorador import login_requerido
 import sys
 import requests
@@ -53,7 +52,7 @@ def registroUsuario(request):
     usuario.save()
     return redirect('/')
 
-
+@login_requerido
 def registroCredencial(request):
     template='registroCredencial.html'
     idusuario=request.session.get('userID')
@@ -67,30 +66,35 @@ def registroCredencial(request):
         detallesCredencial=request.POST.get('detalles','').strip()
         
         usuario=models.Usuario.objects.get(pk=idusuario)#buscamos el usuario que se encuentra loogueado
-        
-        llave_aes=Api.generar_llave_aes_from_password(pwdusuario)#generamos su llave aes a partir de la contra master
-        iv_byte=Api.generar_iv()#generamos el iv unico para cada cuenta para encriptar 
-        iv_texto=Api.de_bytes_a_str(iv_byte)
-        passwordBytes=Api.de_str_a_bytes(passwordCredencial)#generamos la contrasenia asociada para encriptar 
-        cifrado=Api.cifrar(passwordBytes,llave_aes,iv_byte)
-        cifrado_texto=Api.de_bytes_a_str(cifrado)
         cuenta=models.Cuenta()
+        llave_aes=Api.generar_llave_aes_from_password(pwdusuario)#generamos su llave aes a partir de la contra master
+        
+        iv_byte=Api.generar_iv()#generamos el iv unico para cada cuenta para encriptar 
+        iv_texto=Api.bin_str(iv_byte)
+
+        password_bin=Api.str_bin(passwordCredencial)#generamos la contrasenia asociada para encriptar 
+        
+        password_cifrado_bin=Api.cifrar(password_bin,llave_aes,iv_byte)
+        password_cifrado_texto=Api.bin_str(password_cifrado_bin)
+        
+       
         cuenta.nombre_Cuenta=nombreCredencial
         cuenta.usuario_Asociado=usuario
-        cuenta.password_Asociado=cifrado_texto
+        cuenta.password_Asociado=password_cifrado_texto
         cuenta.url_Asociado=urlCredencial
         cuenta.detalles_Asociado=detallesCredencial
         cuenta.iv=iv_texto
         cuenta.save()
         return redirect('/usuario/')
 
-
+@login_requerido
 def usuario(request):
     template='usuario.html'
     iduser=request.session.get('userID')
     if request.method=='GET': 
         return render(request,template)
-    
+
+@login_requerido    
 def generaPassword(request):
     template='generadorPassword.html'
     if request.method=='GET':
@@ -146,7 +150,7 @@ def codigoTelegram(request):
         except:
             errores={'Ocurrio un error inesperado en APIBOtelegram'}
             return render(request,template,{'errores':errores})
-                       
+@login_requerido                       
 def logOut(request):
     request.session.flush()
     return redirect('/')

@@ -12,7 +12,7 @@ class Usuario(models.Model):
     chat_id=models.CharField(max_length=32, default="")
     codigoTelegram=models.CharField(max_length=5, default="")
     tiempo_de_vida = models.DateTimeField(null=True)
-    salt= models.CharField(max_length=24)
+    salt= models.CharField(max_length=512)
     
 
 class Cuenta(models.Model):
@@ -21,7 +21,7 @@ class Cuenta(models.Model):
     password_Asociado=models.CharField(max_length=1024)
     url_Asociado=models.URLField(max_length=1024)
     detalles_Asociado=models.CharField(max_length=1024)
-    iv=models.CharField(max_length=16)
+    iv=models.CharField(max_length=512)
 
 
 
