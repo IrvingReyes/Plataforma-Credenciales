@@ -17,8 +17,8 @@ def bin_str(contenido_cifrado_bin):
     return texto_str
 
 def str_bin(contenido_cifrado_texto):
-    texto_bin=base64.b64decode(contenido_cifrado_texto)
-    return texto_bin
+    texto=base64.b64decode(contenido_cifrado_texto)
+    return texto
 
 def generar_llave_aes_from_password(password):
     password = password.encode('utf-8')
