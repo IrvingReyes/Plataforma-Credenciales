@@ -10,9 +10,33 @@
 {% block barra %}
   <nav class="navbar navbar bg-dark navbar-dark">
     <a class="navbar-brand" href="{% url 'registroCredencial' %}">Añadir Cuenta Nueva</a>
+    <a class="navbar-brand" href="{% url 'editarCredencial' %}">Editar Credencial</a>
     <a class="navbar-brand" href="{% url 'logout' %}">Cerrar Sesion</a>
   </nav>
 {% endblock %}
 {% block contenido %}
-  
+<div class="container">
+  <table>
+    <tr>
+      <th>Nombre Cuenta</th>
+      <th>Contraseña</th>
+      <th>Url</th>
+      <th>detalles</th>
+    </tr>
+    {%for cuenta in cuentas%}
+      <tr>
+        <td>{{ cuenta.nombre_Cuenta }}</td>
+        <td>{{ cuenta.password_Asociado }}</td>
+        <td>{{ cuenta.url_Asociado }}</td>
+        <td>{{ cuenta.detalles_Asociado }}</td>
+      </tr>
+    {%endfor%}
+  </table>
+</div>
+<div class="container">
+  <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-success btn-block">Mostrar</button>
+  </form>
+</div>
 {% endblock %}

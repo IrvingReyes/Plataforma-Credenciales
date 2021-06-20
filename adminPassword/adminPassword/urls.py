@@ -24,6 +24,7 @@ urlpatterns = [
     path('registro/',views.registroUsuario,name='registro'),
     path('usuario/',views.usuario,name='usuario'),
     path('usuario/registroCredencial/',views.registroCredencial,name='registroCredencial'),
+    path('usuario/editarCredencial/',views.editarCredencial,name='editarCredencial'),
     path('usuario/registroCredencial/generarPassword/',views.generaPassword,name='generaPassword'),
     path('codigoTelegram/',views.codigoTelegram,name='codigoTelegram'),
     path('logout',views.logOut,name='logout')
