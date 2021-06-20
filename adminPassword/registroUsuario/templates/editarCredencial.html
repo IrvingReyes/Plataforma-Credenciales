@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block titulo %}ECU{% endblock %}
 {% block estilos %}{% endblock %}
+{% block script %}
+    <script src="/static/js/mostrarClaves.js"></script>
+{% endblock %}
 {% block encabezado %}
 <section class="jumbotron text-center">
   <h3>Editar Credencial</h3>
@@ -56,8 +59,8 @@
                         </div>
                     </div>
                 </section>
+                <button type="submit" class="btn btn-outline-success btn-block">Confirmar Edicion</button>
             </div>
-            <button type="submit" class="btn btn-outline-success btn-block">Confirmar Edicion</button>
         </form>
     </section>
 {% endblock %}

@@ -18,7 +18,7 @@ class Usuario(models.Model):
 class Cuenta(models.Model):
     nombre_Cuenta=models.CharField(max_length=100)
     usuario_Asociado=models.ForeignKey(Usuario,on_delete=models.CASCADE)
-    password_Asociado=models.CharField(max_length=1024)
+    password_Asociado=models.CharField(max_length=2048)
     url_Asociado=models.URLField(max_length=1024)
     detalles_Asociado=models.CharField(max_length=1024)
     iv=models.CharField(max_length=512)
