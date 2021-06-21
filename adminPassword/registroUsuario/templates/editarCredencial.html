@@ -17,12 +17,12 @@
 {% endblock %}
 {%block contenido %}
     <section class="container">
-        <from method='POST'>
+        <form id='editarCredencial' method='POST'>
             {% csrf_token %}
             <p>Ingresa el nombre de la cuenta que deseas modificar</p>
             <div class='form-group'>
-                <label fro='cuenta'>Cuentas</label>
-                <select name='cuenta' class='form-control'>
+                <label from='cuenta'>Cuentas</label>
+                <select form='editarCredencial' name='cuenta' class='form-control'>
                      {% for cuenta in cuentas %}    
                         <option value="{{ cuenta.pk }}">{{ cuenta.nombre_Cuenta }}</option>
                     {% endfor %}

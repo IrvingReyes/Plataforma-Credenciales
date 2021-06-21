@@ -152,11 +152,13 @@ def editarCredencial(request):
         urlCredencial=request.POST.get('url','').strip()
         detallesCredencial=request.POST.get('detalles','').strip()
         cuenta=models.Cuenta.objects.get(pk=id_cuenta)
+        usuario=models.Usuario.objects.get(pk=iduser)
         if not nombreCredencial=='':
             cuenta.nombre_Cuenta=nombreCredencial
         if not passwordCredencial=='':
             iv_byte=Api.generar_iv()
             iv_texto=Api.bin_str(iv_byte)
+            cuenta.iv=iv_texto
             llave=Api.generar_llave_aes_from_password(pwduser)
             passwordCredencial=passwordCredencial.encode('utf-8')
             new_password_cifrada_bytes=Api.cifrar(passwordCredencial,llave,iv_byte)
@@ -167,6 +169,7 @@ def editarCredencial(request):
         if not detallesCredencial=='':
             cuenta.detalles_Asociado=detallesCredencial
         
+        cuenta.usuario_Asociado=usuario
         cuenta.save()
         return redirect('/usuario/')
 

@@ -16,13 +16,16 @@
 {% endblock %}
 {% block contenido %}
 <div class="container">
-  <table>
-    <tr>
-      <th>Nombre Cuenta</th>
-      <th>Contraseña</th>
-      <th>Url</th>
-      <th>detalles</th>
-    </tr>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nombre Cuenta</th>
+        <th scope="col">Contraseña</th>
+        <th scope="col">Url</th>
+        <th scope="col">detalles</th>
+      </tr>
+    </thead>
+
     {%for cuenta in cuentas%}
       <tr>
         <td>{{ cuenta.nombre_Cuenta }}</td>
