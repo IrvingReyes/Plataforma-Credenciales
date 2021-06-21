@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block titulo %}ECU{% endblock %}
+{% block estilos %}{% endblock %}
+{% block script %}
+    <script src="/static/js/mostrarClaves.js"></script>
+{% endblock %}
+{% block encabezado %}
+<section class="jumbotron text-center">
+  <h3>Editar Credencial</h3>
+</section>
+{% endblock %}  
+{% block barra %}
+    <nav class="navbar navbar bg-dark navbar-dark">
+        <a class="navbar-brand" href="{% url 'usuario' %}">Menu Principal</a>
+        <a class="navbar-brand" href="{% url 'generaPassword' %}">Generar Contraseñas Seguras</a>
+    </nav>
+{% endblock %}
+{%block contenido %}
+    <section class="container">
+        <from method='POST'>
+            {% csrf_token %}
+            <p>Ingresa el nombre de la cuenta que deseas modificar</p>
+            <div class='form-group'>
+                <label fro='cuenta'>Cuentas</label>
+                <select name='cuenta' class='form-control'>
+                     {% for cuenta in cuentas %}    
+                        <option value="{{ cuenta.pk }}">{{ cuenta.nombre_Cuenta }}</option>
+                    {% endfor %}
+                </select>
+                <section class='container'>
+                    <div class="row">
+                        <div class="col-7">
+                            <label>Nombre de la Cuenta :</label>
+                            <input type="text" class="form-control" name="nombre" placeholder="Ingresa tu nombre completo">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10">
+                            <label>Contraseña:</label>
+                            <input id='password' type="password" class="form-control" name="password" value="" placeholder="Contraseña">
+                        <div style="margin-top:15px;">
+                            <input style="margin-left:20px;" type="checkbox" id="mostrar_contrasena" title="clic para mostrar contraseña"/>
+                            &nbsp;&nbsp;Mostrar Contraseña</div>
+                        </div>
+            
+                    </div>
+                    <div class="row">
+                        <div class="col-10">
+                            <label>URL :</label>
+                            <input type="url" class="form-control" name="url" placeholder="www.example.com/example" >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <label>Detalles Extra :</label>
+                        </div>
+                        <div class="col-12">
+                            <textarea name="detalles" rows="3" cols="50"></textarea>
+                        </div>
+                    </div>
+                </section>
+                <button type="submit" class="btn btn-outline-success btn-block">Confirmar Edicion</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}

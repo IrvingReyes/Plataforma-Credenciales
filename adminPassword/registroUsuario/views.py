@@ -152,19 +152,21 @@ def editarCredencial(request):
         urlCredencial=request.POST.get('url','').strip()
         detallesCredencial=request.POST.get('detalles','').strip()
         cuenta=models.Cuenta.objects.get(pk=id_cuenta)
+        if not nombreCredencial=='':
+            cuenta.nombre_Cuenta=nombreCredencial
+        if not passwordCredencial=='':
+            iv_byte=Api.generar_iv()
+            iv_texto=Api.bin_str(iv_byte)
+            llave=Api.generar_llave_aes_from_password(pwduser)
+            passwordCredencial=passwordCredencial.encode('utf-8')
+            new_password_cifrada_bytes=Api.cifrar(passwordCredencial,llave,iv_byte)
+            new_password_cifrada_texto=Api.bin_str(new_password_cifrada_bytes)
+            cuenta.password_Asociado=new_password_cifrada_texto   
+        if not urlCredencial=='':
+            cuenta.url_Asociado=urlCredencial
+        if not detallesCredencial=='':
+            cuenta.detalles_Asociado=detallesCredencial
         
-        cuenta.nombre_Cuenta=nombreCredencial
-        cuenta.url_Asociado=urlCredencial
-        cuenta.detalles_Asociado=detallesCredencial
-        
-        llave=Api.generar_llave_aes_from_password(pwduser)
-        iv_byte=Api.generar_iv()
-        iv_texto=Api.bin_str(iv_byte)
-        cuenta.iv=iv_texto
-        password_bin=Api.str_bin(passwordCredencial)
-        password_cifrado_bin=Api.cifrar(password_bin,llave,iv_byte)
-        password_cifrado_texto=Api.bin_str(password_cifrado_bin)
-        cuenta.password_Asociado=password_cifrado_texto
         cuenta.save()
         return redirect('/usuario/')
 
