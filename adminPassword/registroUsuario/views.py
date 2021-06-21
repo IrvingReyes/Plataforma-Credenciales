@@ -13,8 +13,13 @@ import requests
 import random
 import datetime 
 from datetime import timezone
+import logging
 
 # Create your views here.
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
+                    datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO,
+                    filename='bitacoraWebWarden.log', filemode='a')
+
 
 def codigoTelegram(request):
     template='codigoTelegram.html'
@@ -46,6 +51,7 @@ def logIn(request):
         ip = Api.get_client_ip(request)
         if not Api.puede_intentar(ip):
             errores={'Numero de intentos agotado, espera un minuto.'}
+            logging.warning('Un usuario agotó su numero de intentos.')
             return render(request,template,{'errores':errores})
         username=request.POST.get('username','').strip()
         password=request.POST.get('password','').strip()
@@ -63,9 +69,11 @@ def logIn(request):
             request.session['pwd']=password
             usuario.codigoTelegram = random.randint(9999,99999)
             usuario.save()
+            logging.info("Se logueo el usuario " + username)
             return redirect('usuario/')
         except:
             errores={'Ocurrio un error inesperado. Usuario o contraseña no válidos o código de acceso no valido o expiró.'}
+            logging.error("El usuario " + username + "falló a tratar de autenticarse.")
             return render(request,template,{'errores':errores})
 
 def registroUsuario(request):
@@ -102,6 +110,7 @@ def registroUsuario(request):
     usuario.chat_id=chatId
     usuario.codigoTelegram = random.randint(9999,99999)
     usuario.save()
+    logging.info("Se registo el usuario " + username)
     return redirect('/')
 
 @login_requerido
@@ -134,6 +143,7 @@ def registroCredencial(request):
         cuenta.detalles_Asociado=detallesCredencial
         cuenta.iv=iv_texto
         cuenta.save()
+        logging.info("El usuario con id " + str(idusuario) + " registró una credencial." )
         return redirect('/usuario/')
 
 @login_requerido
@@ -207,5 +217,6 @@ def generaPassword(request):
 
 @login_requerido                       
 def logOut(request):
+    logging.info("Un usuario cerró sesion")
     request.session.flush()
     return redirect('/')
